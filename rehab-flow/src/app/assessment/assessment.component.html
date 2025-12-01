@@ -1,0 +1,99 @@
+<div class="assessment-container">
+  <!-- Step 1: Describe Injury -->
+  <div *ngIf="step === 1" class="step-content fade-in">
+    <div class="header">
+      <button class="back-button" routerLink="/">←</button>
+    </div>
+    
+    <h1 class="title">Tu recuperación,<br>guiada paso a paso</h1>
+    <p class="subtitle">Un programa inteligente para deportistas que quieren recuperarse mejor, evitar recaídas y volver al 100%.</p>
+    
+    <div class="card">
+      <div class="logo-small" routerLink="/" style="cursor: pointer;">
+        <div class="logo-icon">R</div>
+        <span>RehabFlow</span>
+      </div>
+      
+      <h2>Describe tu lesión</h2>
+      
+      <div class="input-group">
+        <textarea 
+          [(ngModel)]="injuryDescription" 
+          placeholder="Ej: desgarro gemelo derecho, dolor al correr"
+          rows="4"
+        ></textarea>
+        <p class="hint">Describe dónde duele, cómo empezó y qué deporte hacés</p>
+      </div>
+      
+      <button class="primary-button" (click)="nextStep()" [disabled]="!injuryDescription">Analizar</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Duration -->
+  <div *ngIf="step === 2" class="step-content fade-in">
+    <div class="header">
+      <button class="back-button" (click)="step = 1">←</button>
+    </div>
+    
+    <h2 class="question">¿Cuánto tiempo hace que ocurrió la lesión?</h2>
+    
+    <div class="options-list">
+      <button 
+        *ngFor="let duration of durations" 
+        class="option-button" 
+        [class.selected]="injuryDuration === duration"
+        (click)="injuryDuration = duration"
+      >
+        {{ duration }}
+      </button>
+    </div>
+    
+    <button class="primary-button full-width" (click)="nextStep()" [disabled]="!injuryDuration">Continuar</button>
+  </div>
+
+  <!-- Step 3: Injury Type -->
+  <div *ngIf="step === 3" class="step-content fade-in">
+    <div class="header">
+      <button class="back-button" (click)="step = 2">←</button>
+    </div>
+    
+    <h2 class="question">¿Cuál es la lesión que deseas tratar?</h2>
+    
+    <div class="options-list">
+      <button 
+        *ngFor="let type of injuryTypes" 
+        class="option-button" 
+        [class.selected]="selectedInjuryType === type"
+        (click)="selectedInjuryType = type"
+      >
+        {{ type }}
+      </button>
+    </div>
+    
+    <button class="primary-button full-width" (click)="nextStep()" [disabled]="!selectedInjuryType">Continuar</button>
+  </div>
+
+  <!-- Step 4: Analyzing -->
+  <div *ngIf="step === 4" class="step-content fade-in center-content">
+    <div class="header">
+      <button class="back-button" (click)="step = 3">←</button>
+    </div>
+    
+    <h2 class="question">Gracias. Estamos preparando tu programa personalizado.</h2>
+    
+    <div class="doctor-avatar">
+      <!-- Placeholder for doctor image -->
+      <div class="avatar-circle">👨‍⚕️</div>
+    </div>
+    
+    <p class="note">
+      Próximamente, tendrás acceso a un plan de recuperación creado por un fisioterapeuta certificado, adaptado a tu lesión y tus necesidades.
+    </p>
+    
+    <button class="primary-button full-width" disabled>
+      <span class="loader"></span> Ver programa
+    </button>
+    
+    <p class="small-note">Te notificaremos cuando tu plan esté listo</p>
+  </div>
+</div>

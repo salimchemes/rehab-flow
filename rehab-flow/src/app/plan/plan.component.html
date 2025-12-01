@@ -1,0 +1,94 @@
+<div class="plan-container">
+  <header class="header">
+    <div class="logo" routerLink="/" style="cursor: pointer;">
+      <div class="logo-icon">R</div>
+      <span class="logo-text">RehabFlow</span>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="status-badge">
+      <span class="dot"></span> Plan generado por IA
+    </div>
+
+    <h1 class="title">Tu plan de recuperación</h1>
+    
+    <div class="injury-summary">
+      <h2>Diagnóstico preliminar</h2>
+      <p class="injury-name">{{ injury }}</p>
+      <p class="injury-desc">{{ description }}</p>
+      <div class="meta">
+        <span class="tag">{{ duration }}</span>
+      </div>
+    </div>
+
+    <div class="plan-preview">
+      <h2>Fases de recuperación</h2>
+      
+      <div class="phase-card active">
+        <div class="phase-header">
+          <span class="phase-num">01</span>
+          <div class="phase-info">
+            <h3>Control del dolor e inflamación</h3>
+            <p>Semana 1</p>
+          </div>
+          <span class="status-icon">🔓</span>
+        </div>
+        <div class="phase-content">
+          <div class="exercise-list">
+            <div class="exercise-item" *ngFor="let ex of phase1Exercises">
+              <div class="exercise-icon">
+                <span *ngIf="ex.type === 'recovery'">🧊</span>
+                <span *ngIf="ex.type === 'exercise'">💪</span>
+              </div>
+              <div class="exercise-details">
+                <h4>{{ ex.name }}</h4>
+                <p>{{ ex.description }}</p>
+                <div class="exercise-meta" *ngIf="ex.type === 'exercise'">
+                  <span class="badge">{{ ex.sets }} series</span>
+                  <span class="badge">{{ ex.reps }} reps</span>
+                </div>
+                <div class="exercise-meta" *ngIf="ex.type === 'recovery'">
+                  <span class="badge">{{ ex.duration }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase-card locked">
+        <div class="phase-header">
+          <span class="phase-num">02</span>
+          <div class="phase-info">
+            <h3>Movilidad y Activación</h3>
+            <p>Semanas 2-3</p>
+          </div>
+          <span class="status-icon">🔒</span>
+        </div>
+        <div class="blur-overlay">
+          <p>Desbloquea tu plan completo para ver los ejercicios</p>
+        </div>
+      </div>
+
+      <div class="phase-card locked">
+        <div class="phase-header">
+          <span class="phase-num">03</span>
+          <div class="phase-info">
+            <h3>Fortalecimiento y Retorno</h3>
+            <p>Semanas 4-6</p>
+          </div>
+          <span class="status-icon">🔒</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <button class="premium-button">
+        Obtener Plan Completo
+        <span class="price">$29.99</span>
+      </button>
+      <p class="guarantee">Garantía de devolución de 7 días</p>
+    </div>
+  </main>
+</div>
