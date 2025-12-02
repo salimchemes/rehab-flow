@@ -25,7 +25,7 @@
     <div class="plan-preview">
       <h2>Fases de recuperación</h2>
       
-      <div class="phase-card active">
+      <div class="phase-card active clickable" (click)="showDetails = true">
         <div class="phase-header">
           <span class="phase-num">01</span>
           <div class="phase-info">
@@ -35,25 +35,7 @@
           <span class="status-icon">🔓</span>
         </div>
         <div class="phase-content">
-          <div class="exercise-list">
-            <div class="exercise-item" *ngFor="let ex of phase1Exercises">
-              <div class="exercise-icon">
-                <span *ngIf="ex.type === 'recovery'">🧊</span>
-                <span *ngIf="ex.type === 'exercise'">💪</span>
-              </div>
-              <div class="exercise-details">
-                <h4>{{ ex.name }}</h4>
-                <p>{{ ex.description }}</p>
-                <div class="exercise-meta" *ngIf="ex.type === 'exercise'">
-                  <span class="badge">{{ ex.sets }} series</span>
-                  <span class="badge">{{ ex.reps }} reps</span>
-                </div>
-                <div class="exercise-meta" *ngIf="ex.type === 'recovery'">
-                  <span class="badge">{{ ex.duration }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <p class="tap-hint">Toca para ver detalles y ejercicios</p>
         </div>
       </div>
 
@@ -64,7 +46,7 @@
             <h3>Movilidad y Activación</h3>
             <p>Semanas 2-3</p>
           </div>
-          <span class="status-icon">🔒</span>
+          <span class="status-icon">�</span>
         </div>
         <div class="blur-overlay">
           <p>Desbloquea tu plan completo para ver los ejercicios</p>
@@ -91,4 +73,50 @@
       <p class="guarantee">Garantía de devolución de 7 días</p>
     </div>
   </main>
+
+  <!-- Details Modal -->
+  <div class="modal-overlay" *ngIf="showDetails" (click)="showDetails = false">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="showDetails = false">×</button>
+      
+      <h2 class="modal-title">Fase 1: Control del dolor e inflamación</h2>
+      <p class="modal-subtitle">Semana 1 - Contenido premium</p>
+      
+      <p class="modal-desc">Para acelerar tu recuperación necesitas ejercicios adaptados al tipo y grado de desgarro.</p>
+
+      <div class="section">
+        <h3>Qué incluye esta fase</h3>
+        <ul class="check-list">
+          <li>Protocolos especificos para tu tipo de lesión</li>
+          <li>Ejercicios con video (movilidad, activaciones isométricas, control neuromuscular)</li>
+          <li>Ritmo, cargas, reps y series personalizadas</li>
+          <li>Indicaciones de progresión según sintomas</li>
+          <li>Alertas de riesgo y precauciones</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Feedback inicial (gratis)</h3>
+        <p class="section-desc">Basado en tu evaluación, probablemente estés en la etapa donde:</p>
+        <ul class="bullet-list">
+          <li>La inflamación todavía está presente</li>
+          <li>Movimientos suaves están permitidos si no hay dolor agudo</li>
+          <li>Trabajar isométricos reduce tiempo de recuperacion</li>
+          <li>El reposo absoluto no es recomendado</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Vista previa de ejercicios</h3>
+        <div class="exercise-preview-card">
+          <div class="preview-icon">💪</div>
+          <div class="preview-info">
+            <h4>Protocolo RICE</h4>
+            <p>Aplicar frio 15 minutos cada 2-3 h</p>
+          </div>
+          <div class="preview-lock">🔒</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -13,6 +13,7 @@ export class PlanComponent implements OnInit {
   injury: string = '';
   description: string = '';
   duration: string = '';
+  showDetails: boolean = false;
 
   constructor(private router: Router) {
     const nav = this.router.getCurrentNavigation();
