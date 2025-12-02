@@ -377,6 +377,15 @@
   gap: 1rem;
 }
 
+.exercise-preview-card.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.exercise-preview-card.clickable:hover {
+  background-color: #f9fafb;
+}
+
 .preview-icon {
   width: 48px;
   height: 48px;

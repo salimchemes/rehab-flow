@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  color: #111827;
+}
+
+.rice-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  margin-left: -0.5rem;
+  color: #374151;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  line-height: 1.1;
+  color: #111827;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.5rem 0 2rem 0;
+  color: #111827;
+}
+
+.context-info {
+  margin-bottom: 2.5rem;
+}
+
+.phase {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+.duration {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #111827;
+}
+
+.bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  color: #374151;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.bullet-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #111827;
+  font-size: 1.5rem;
+  line-height: 1rem;
+  top: 0.25rem;
+}
+
+strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+p {
+  line-height: 1.5;
+  color: #374151;
+  margin: 0;
+}
