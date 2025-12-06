@@ -1,4 +1,4 @@
-<div class="plan-container">
+<div class="plan-container" *ngIf="plan; else loading">
   <header class="header">
     <div class="logo" routerLink="/" style="cursor: pointer;">
       <div class="logo-icon">R</div>
@@ -15,108 +15,93 @@
     
     <div class="injury-summary">
       <h2>Diagnóstico preliminar</h2>
-      <p class="injury-name">{{ injury }}</p>
-      <p class="injury-desc">{{ description }}</p>
+      <p class="injury-name">{{ plan.resumen_lesion }}</p>
       <div class="meta">
-        <span class="tag">{{ duration }}</span>
+        <span class="tag">Fase Actual</span>
       </div>
     </div>
 
     <div class="plan-preview">
-      <h2>Fases de recuperación</h2>
+      <h2>Objetivo de la Fase</h2>
+      <p class="phase-objective">{{ plan.objetivo_fase }}</p>
       
-      <div class="phase-card active clickable" (click)="showDetails = true">
-        <div class="phase-header">
-          <span class="phase-num">01</span>
-          <div class="phase-info">
-            <h3>Control del dolor e inflamación</h3>
-            <p>Semana 1</p>
+      <!-- Free Content: Warning/Alerts -->
+      <div class="section-card warning">
+        <h3>Alertas y Señales</h3>
+        <ul class="alert-list">
+          <li *ngFor="let alerta of plan.alertas">{{ alerta }}</li>
+        </ul>
+      </div>
+
+      <div class="section-card info">
+        <h3>Recomendaciones</h3>
+        <p>{{ plan.recomendaciones }}</p>
+      </div>
+
+      <!-- Free Teaser (First Exercise only, or just blur all? User said "first block free". Let's show Alerts/Recs as free, Exercises as Paid) -->
+      <!-- Let's actually SHOW the list but BLUR IT to tease content length -->
+      <!-- Free Content: Exercises -->
+      <div class="section-card">
+        <h3>Ejercicios Recomendados</h3>
+        <div class="exercise-list">
+          <div class="exercise-card" *ngFor="let ex of plan.ejercicios">
+            <div class="exercise-header">
+              <h4>{{ ex.nombre }}</h4>
+              <span class="pain-level">Dolor máx: {{ ex.nivel_dolor_permitido }}</span>
+            </div>
+            
+            <!-- Media Placeholder -->
+            <div class="media-placeholder">
+              <div class="media-icon">▶️</div>
+              <span>Ver demostración</span>
+            </div>
+
+            <p class="instruction">{{ ex.instrucciones }}</p>
+              <div class="exercise-meta">
+              <span *ngIf="ex.series">Series: {{ ex.series }}</span>
+              <span *ngIf="ex.repeticiones">Reps: {{ ex.repeticiones }}</span>
+              <span *ngIf="ex.duracion">Duración: {{ ex.duracion }}</span>
+            </div>
+            <div class="warning-box" *ngIf="ex.que_evitar">
+              ⚠️ Evitar: {{ ex.que_evitar }}
+            </div>
           </div>
-          <span class="status-icon">🔓</span>
-        </div>
-        <div class="phase-content">
-          <p class="tap-hint">Toca para ver detalles y ejercicios</p>
         </div>
       </div>
 
-      <div class="phase-card locked">
-        <div class="phase-header">
-          <span class="phase-num">02</span>
-          <div class="phase-info">
-            <h3>Movilidad y Activación</h3>
-            <p>Semanas 2-3</p>
+      <!-- Locked Content: Progression & Advanced Details -->
+      <div class="locked-section">
+        <div [class.premium-blur]="!isPremium">
+          
+          <div class="section-card progression">
+            <h3>Reglas de Progresión</h3>
+            <ul class="check-list">
+              <li *ngFor="let regla of plan.reglas_progresion">{{ regla }}</li>
+            </ul>
           </div>
-          <span class="status-icon">�</span>
         </div>
-        <div class="blur-overlay">
-          <p>Desbloquea tu plan completo para ver los ejercicios</p>
+
+        <!-- Overlay -->
+        <div class="premium-overlay" *ngIf="!isPremium">
+          <div class="lock-icon">🔒</div>
+          <h3>Desbloquea las Reglas de Evolución</h3>
+          <p style="margin-bottom: 2rem; color: #666; text-align: center; max-width: 80%;">
+            Aprende cuándo avanzar de fase y cómo evitar recaídas.
+          </p>
+          <button class="premium-button" (click)="unlockPlan()" style="width: auto; padding-left: 2rem; padding-right: 2rem;">
+            Desbloquear por $29.99
+          </button>
         </div>
       </div>
 
-      <div class="phase-card locked">
-        <div class="phase-header">
-          <span class="phase-num">03</span>
-          <div class="phase-info">
-            <h3>Fortalecimiento y Retorno</h3>
-            <p>Semanas 4-6</p>
-          </div>
-          <span class="status-icon">🔒</span>
-        </div>
-      </div>
-    </div>
 
-    <div class="cta-section">
-      <button class="premium-button">
-        Obtener Plan Completo
-        <span class="price">$29.99</span>
-      </button>
-      <p class="guarantee">Garantía de devolución de 7 días</p>
     </div>
   </main>
-
-  <!-- Details Modal -->
-  <div class="modal-overlay" *ngIf="showDetails" (click)="showDetails = false">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <button class="close-button" (click)="showDetails = false">×</button>
-      
-      <h2 class="modal-title">Fase 1: Control del dolor e inflamación</h2>
-      <p class="modal-subtitle">Semana 1 - Contenido premium</p>
-      
-      <p class="modal-desc">Para acelerar tu recuperación necesitas ejercicios adaptados al tipo y grado de desgarro.</p>
-
-      <div class="section">
-        <h3>Qué incluye esta fase</h3>
-        <ul class="check-list">
-          <li>Protocolos especificos para tu tipo de lesión</li>
-          <li>Ejercicios con video (movilidad, activaciones isométricas, control neuromuscular)</li>
-          <li>Ritmo, cargas, reps y series personalizadas</li>
-          <li>Indicaciones de progresión según sintomas</li>
-          <li>Alertas de riesgo y precauciones</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h3>Feedback inicial (gratis)</h3>
-        <p class="section-desc">Basado en tu evaluación, probablemente estés en la etapa donde:</p>
-        <ul class="bullet-list">
-          <li>La inflamación todavía está presente</li>
-          <li>Movimientos suaves están permitidos si no hay dolor agudo</li>
-          <li>Trabajar isométricos reduce tiempo de recuperacion</li>
-          <li>El reposo absoluto no es recomendado</li>
-        </ul>
-      </div>
-
-      <div class="section">
-        <h3>Vista previa de ejercicios</h3>
-        <div class="exercise-preview-card clickable" routerLink="/rice">
-          <div class="preview-icon">💪</div>
-          <div class="preview-info">
-            <h4>Protocolo RICE</h4>
-            <p>Aplicar frio 15 minutos cada 2-3 h</p>
-          </div>
-          <div class="preview-lock">🔒</div>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Generando tu plan personalizado...</p>
+  </div>
+</ng-template>

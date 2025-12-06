@@ -1,0 +1,58 @@
+                         ┌────────────────────────┐
+                         │        FRONTEND         │
+                         │  (Next/Angular Web App) │
+                         └───────────┬────────────┘
+                                     │
+                                     ▼
+                    ┌────────────────────────────────┐
+                    │           BACKEND API           │
+                    │    (Node / Nest / Express)      │
+                    └────────────────┬────────────────┘
+                                     │
+               ┌─────────────────────┴─────────────────────┐
+               │                                           │
+               ▼                                           ▼
+ ┌──────────────────────────┐                 ┌──────────────────────────┐
+ │ Input Normalizer/Parser  │                 │ Prompt Template Manager  │
+ │ - Valida y limpia datos  │                 │ - Templates JSON         │
+ │ - Estandariza lesión     │                 │ - Versionado             │
+ └───────────┬──────────────┘                 └───────────┬──────────────┘
+             │                                            │
+             ▼                                            ▼
+ ┌──────────────────────────┐                 ┌──────────────────────────┐
+ │  Context Selector         │                 │  Context Pack            │
+ │ - Regla simple (if/else)  │                 │ - Indicaciones clínicas  │
+ │ - Asigna protocolo base   │                 │ - Fases                 │
+ └───────────┬──────────────┘                 │ - Contraindicaciones     │
+             │                                 └──────────────────────────┘
+             ▼
+ ┌──────────────────────────────────────┐
+ │    Prompt Builder (Middleware IA)    │
+ │  - Mezcla: input limpio + template + │
+ │    contexto                          │
+ │  - Genera un prompt estructurado     │
+ │  - Pide salida en JSON               │
+ └──────────────────┬───────────────────┘
+                    │
+                    ▼
+       ┌──────────────────────────────┐
+       │      MOTOR IA (LLM)          │
+       │ GPT-4.1 / GPT-4o-mini / Sonnet│
+       └───────────┬───────────────────┘
+                   │
+                   ▼
+         ┌────────────────────────┐
+         │   Post-Processor       │
+         │ - Valida formato JSON  │
+         │ - Limpia inconsistencias │
+         │ - Ordena por fases       │
+         └───────────┬─────────────┘
+                     │
+                     ▼
+          ┌───────────────────────────┐
+          │  FRONTEND: Plan Renderer  │
+          │ - Día por día             │
+          │ - Ejercicios por fase     │
+          │ - Contraindicaciones      │
+          │ - Botones de “Mejoró / Empeoró” │
+          └───────────────────────────┘

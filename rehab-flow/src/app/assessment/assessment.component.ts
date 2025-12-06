@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { RecoveryService } from '../services/recovery.service';
 
 @Component({
   selector: 'app-assessment',
@@ -34,7 +35,10 @@ export class AssessmentComponent {
     'Rotura de ligamento'
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private recoveryService: RecoveryService
+  ) {}
 
   nextStep() {
     if (this.step < 3) {
@@ -48,15 +52,23 @@ export class AssessmentComponent {
     this.step = 4; // Analyzing state
     this.isAnalyzing = true;
     
-    // Simulate API call
-    setTimeout(() => {
-      this.router.navigate(['/plan'], { 
-        state: { 
-          injury: this.selectedInjuryType,
-          description: this.injuryDescription,
-          duration: this.injuryDuration
-        } 
-      });
-    }, 2000);
+    const request = {
+      injuryDescription: `${this.selectedInjuryType}. ${this.injuryDescription}. Duration: ${this.injuryDuration}`,
+      kinesiologistContext: {
+        // We can add specific user context here if needed
+        userGoal: 'Recovery'
+      }
+    };
+
+    this.recoveryService.generatePlan(request).subscribe({
+      next: () => {
+        this.router.navigate(['/plan']);
+      },
+      error: (err) => {
+        console.error('Error generating plan', err);
+        this.isAnalyzing = false;
+        this.step = 3; // Go back or show error
+      }
+    });
   }
 }
